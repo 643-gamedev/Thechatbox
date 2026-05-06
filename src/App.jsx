@@ -10,6 +10,7 @@ import { UserProvider, useUser } from '@/lib/UserContext';
 import { LayoutProvider } from '@/lib/LayoutContext';
 import LoginScreen from '@/components/LoginScreen';
 import IncomingCallListener from '@/components/phone/IncomingCallListener';
+import { stopDialupModem } from '@/lib/sounds';
 import DialupLoadingScreen from '@/components/DialupLoadingScreen';
 
 import { Navigate } from 'react-router-dom';
@@ -67,7 +68,6 @@ const AuthenticatedApp = () => {
     return (
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/download" element={<Landing />} />
         <Route path="*" element={<LoginScreen onGuest={loginAsGuest} />} />
       </Routes>
     );
@@ -77,7 +77,6 @@ const AuthenticatedApp = () => {
     <Routes>
       {/* Public landing page */}
       <Route path="/" element={<Landing />} />
-      <Route path="/download" element={<Landing />} />
       <Route element={<AppLayout />}>
         {/* App entry */}
         <Route path="/app" element={<ServerHome />} />

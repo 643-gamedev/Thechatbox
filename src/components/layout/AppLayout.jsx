@@ -1,5 +1,3 @@
-import db from '@/api/chatboxClient';
-
 
 import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';

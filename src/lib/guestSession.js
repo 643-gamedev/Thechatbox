@@ -1,6 +1,6 @@
 // Guest session management using localStorage
 
-const GUEST_KEY = 'thechatbox_guest_session';
+const GUEST_KEY = 'stoat_guest_session';
 
 export function getGuestSession() {
   try {

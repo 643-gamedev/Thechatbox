@@ -1,5 +1,3 @@
-import db from '@/api/chatboxClient';
-
 
 
 // Generate a fake number with unused area codes (000, 010, 011, 099, etc.)

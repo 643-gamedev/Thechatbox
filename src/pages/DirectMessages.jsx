@@ -1,12 +1,10 @@
-import db from '@/api/chatboxClient';
-
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { useUser } from '@/lib/UserContext';
-import { Phone, Send, ArrowLeft, Check, X } from 'lucide-react';
+import { Phone, Send, ArrowLeft, Check, X, UserPlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLayout } from '@/lib/LayoutContext';
 import DMCallOverlay from '@/components/dm/DMCallOverlay';

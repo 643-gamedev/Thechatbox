@@ -1,10 +1,8 @@
-import db from '@/api/chatboxClient';
-
 
 import React, { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { Search, Globe } from 'lucide-react';
+import { Search, Lock, Globe, Users } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useUser } from '@/lib/UserContext';
@@ -30,14 +28,6 @@ export default function Discover() {
   const handleJoin = async (server) => {
     if (isGuest) {
       toast.error('Login to join servers');
-      return;
-    }
-    const existing = await db.entities.ServerMember.filter({
-      server_id: server.id,
-      user_email: currentUser.email,
-    });
-    if (existing.length > 0) {
-      navigate(`/server/${server.id}`);
       return;
     }
     await db.entities.ServerMember.create({

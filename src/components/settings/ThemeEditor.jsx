@@ -1,5 +1,3 @@
-import db from '@/api/chatboxClient';
-
 
 import React from 'react';
 // ThemeEditor — no changes needed here

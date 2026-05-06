@@ -1,5 +1,3 @@
-import db from '@/api/chatboxClient';
-
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 
@@ -121,7 +119,7 @@ export default function DMCallOverlay({ myEmail, myName, peerEmail, peerName, on
     start().catch(e => { if (!cancelled) setError(e.message || 'Mic access denied'); });
 
     return () => { cancelled = true; cleanup(); };
-  }, []);  
+  }, []); // eslint-disable-line
 
   const toggleMic = () => {
     if (!myStreamRef.current) return;
@@ -134,7 +132,7 @@ export default function DMCallOverlay({ myEmail, myName, peerEmail, peerName, on
 
   return (
     <div className="absolute inset-0 bg-background/95 backdrop-blur-sm z-50 flex flex-col items-center justify-center gap-6">
-      <audio ref={peerAudioRef} autoPlay />
+      <audio ref={peerAudioRef} autoPlay playsInline />
 
       <div className="flex flex-col items-center gap-3">
         <div className="w-16 h-16 rounded-full border-2 border-primary flex items-center justify-center text-2xl font-bold glow-subtle">

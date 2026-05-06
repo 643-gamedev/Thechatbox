@@ -1,5 +1,3 @@
-import db from '@/api/chatboxClient';
-
 
 import React, { useState } from 'react';
 import { Play, Save, Copy, Trash2, FileCode } from 'lucide-react';

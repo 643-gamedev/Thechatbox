@@ -1,5 +1,3 @@
-import db from '@/api/chatboxClient';
-
 
 import React, { useState, useEffect } from 'react';
 import { getOrCreatePhoneNumber } from '@/lib/phoneNumber';
@@ -38,6 +36,7 @@ export default function Settings() {
 
   const saveRealNumber = async () => {
     if (!myPhone) return;
+    const { base44 } = await import('@/api/chatboxClient');
     await db.entities.PhoneNumber.update(myPhone.id, { real_number: editingPhone.trim() || null });
     setMyPhone(p => ({ ...p, real_number: editingPhone.trim() || null }));
     setPhoneSaved(true);

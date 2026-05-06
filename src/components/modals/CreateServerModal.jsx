@@ -1,5 +1,3 @@
-import db from '@/api/chatboxClient';
-
 
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -32,12 +30,6 @@ export default function CreateServerModal({ open, onClose, onCreated }) {
       owner_email: currentUser.email,
       is_main: false,
       ...(inviteToken ? { invite_token: inviteToken } : {}),
-    });
-    await db.entities.ServerMember.create({
-      server_id: server.id,
-      user_email: currentUser.email,
-      display_name: currentUser.full_name || currentUser.email,
-      role: 'mod',
     });
     // Create a default general channel
     await db.entities.Channel.create({

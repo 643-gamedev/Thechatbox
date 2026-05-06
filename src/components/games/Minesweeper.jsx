@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 const ROWS = 9, COLS = 9, MINES = 10;
 

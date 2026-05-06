@@ -154,3 +154,7 @@
 .crt-flicker {
   animation: flicker 4s infinite;
 }
+
+#base44-badge {
+  display: none !important;
+}

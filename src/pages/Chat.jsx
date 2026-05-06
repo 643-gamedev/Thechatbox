@@ -1,5 +1,3 @@
-import db from '@/api/chatboxClient';
-
 
 import React, { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';

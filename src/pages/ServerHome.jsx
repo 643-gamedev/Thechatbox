@@ -1,5 +1,3 @@
-import db from '@/api/chatboxClient';
-
 
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';

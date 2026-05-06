@@ -1,9 +1,8 @@
-import db from '@/api/chatboxClient';
-
 
 import React, { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { Button } from '@/components/ui/button';
 import { Shield, Trash2, Ban, UserCheck, Server, Hash } from 'lucide-react';
 
 export default function OwnerPanel() {

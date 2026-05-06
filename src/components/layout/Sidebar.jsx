@@ -1,9 +1,7 @@
-import db from '@/api/chatboxClient';
-
 
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Hash, Code, Terminal, Plus, ChevronDown, ChevronRight } from 'lucide-react';
+import { Hash, Code, Terminal, MessageSquare, Plus, ChevronDown, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';

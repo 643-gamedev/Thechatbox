@@ -1,5 +1,3 @@
-import db from '@/api/chatboxClient';
-
 
 import React, { useState, useEffect, useRef } from 'react';
 
@@ -9,7 +7,7 @@ import { createPeerConnection, getUserMedia, addStreamToPeer, attachRemoteStream
 import { playConnectingRing } from '@/lib/sounds';
 import Dialpad from '@/components/phone/Dialpad';
 import ActiveCallUI from '@/components/phone/ActiveCallUI';
-import { Phone } from 'lucide-react';
+import { Phone, Users } from 'lucide-react';
 
 export default function PhonePage() {
   const { currentUser } = useUser();
@@ -166,7 +164,7 @@ export default function PhonePage() {
             {activeCall.status === 'ringing' ? 'CALLING...' : 'IN CALL'}
           </span>
         </div>
-        <audio ref={remoteAudioRef} autoPlay className="hidden" />
+        <audio ref={remoteAudioRef} autoPlay playsInline className="hidden" />
         {activeCall.status === 'ringing' && activeCall.caller_email === currentUser?.email ? (
           <div className="flex flex-col items-center justify-center flex-1 gap-4">
             <div className="w-20 h-20 rounded-full flex items-center justify-center text-2xl font-bold border-2 animate-pulse"
