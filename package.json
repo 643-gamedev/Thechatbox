@@ -17,7 +17,8 @@
     "android:sync": "npm run build && npx cap sync android",
     "android:apk": "npm run build && npx cap sync android && cd android && ./gradlew assembleDebug",
     "bridge:dev": "npm --prefix services/stoat-bridge run dev",
-    "bridge:start": "npm --prefix services/stoat-bridge run start"
+    "bridge:start": "npm --prefix services/stoat-bridge run start",
+    "sync:base44": "node tools/base44-sync.mjs"
   },
   "dependencies": {
     "@hello-pangea/dnd": "^17.0.0",
