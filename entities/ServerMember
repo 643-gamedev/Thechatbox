@@ -1,0 +1,28 @@
+{
+  "name": "ServerMember",
+  "type": "object",
+  "properties": {
+    "server_id": {
+      "type": "string"
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "mod",
+        "member",
+        "guest"
+      ],
+      "default": "member"
+    }
+  },
+  "required": [
+    "server_id",
+    "user_email"
+  ]
+}

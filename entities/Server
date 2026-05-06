@@ -1,0 +1,38 @@
+{
+  "name": "Server",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "is_public": {
+      "type": "boolean",
+      "default": true
+    },
+    "owner_email": {
+      "type": "string"
+    },
+    "is_main": {
+      "type": "boolean",
+      "default": false
+    },
+    "icon": {
+      "type": "string",
+      "description": "Emoji icon for the server"
+    },
+    "member_count": {
+      "type": "number",
+      "default": 1
+    },
+    "invite_token": {
+      "type": "string",
+      "description": "Unique token for private server invite links"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

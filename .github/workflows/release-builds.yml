@@ -1,0 +1,117 @@
+name: Release Builds
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  desktop:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            target: "--win nsis"
+            artifact_glob: "releases/*.exe"
+            artifact_name: windows-exe
+          - os: macos-latest
+            target: "--mac dmg"
+            artifact_glob: "releases/*.dmg"
+            artifact_name: macos-dmg
+          - os: ubuntu-latest
+            target: "--linux deb"
+            artifact_glob: "releases/*.deb"
+            artifact_name: linux-deb
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build web app
+        run: npm run build
+
+      - name: Build desktop artifact
+        run: npx electron-builder --config electron-builder.yml ${{ matrix.target }}
+
+      - name: Upload desktop artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.artifact_glob }}
+
+  android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build web app
+        run: npm run build
+
+      - name: Setup Android project
+        run: |
+          if [ ! -d android ]; then
+            npm run android:init
+          fi
+          npm run android:sync
+
+      - name: Build APK
+        run: |
+          cd android
+          ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+
+  publish:
+    if: github.event_name == 'release'
+    needs: [desktop, android]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Prepare release filenames
+        run: |
+          cp artifacts/windows-exe/*.exe artifacts/Thechatbox-Setup.exe
+          cp artifacts/macos-dmg/*.dmg artifacts/Thechatbox.dmg
+          cp artifacts/linux-deb/*.deb artifacts/thechatbox.deb
+          cp artifacts/android-apk/*.apk artifacts/thechatbox.apk
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/Thechatbox-Setup.exe
+            artifacts/Thechatbox.dmg
+            artifacts/thechatbox.deb
+            artifacts/thechatbox.apk

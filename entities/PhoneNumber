@@ -1,0 +1,25 @@
+{
+  "name": "PhoneNumber",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Email of the user who owns this number"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "number": {
+      "type": "string",
+      "description": "Assigned fake phone number e.g. 010-482-3917"
+    },
+    "real_number": {
+      "type": "string",
+      "description": "Optional real phone number the user set manually"
+    }
+  },
+  "required": [
+    "user_email",
+    "number"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "name": "Channel",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "text",
+        "code",
+        "terminal",
+        "voice"
+      ],
+      "default": "text"
+    },
+    "server_id": {
+      "type": "string",
+      "description": "ID of the server this channel belongs to. 'main' for the main server."
+    },
+    "daily_room_url": {
+      "type": "string",
+      "description": "Daily.co room URL for voice/video channels"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

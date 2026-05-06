@@ -1,0 +1,24 @@
+{
+  "name": "DirectMessage",
+  "type": "object",
+  "properties": {
+    "conversation_id": {
+      "type": "string",
+      "description": "Sorted pair of emails joined by ':', e.g. a@x.com:b@x.com"
+    },
+    "from_email": {
+      "type": "string"
+    },
+    "from_name": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "conversation_id",
+    "from_email",
+    "content"
+  ]
+}

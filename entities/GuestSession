@@ -1,0 +1,19 @@
+{
+  "name": "GuestSession",
+  "type": "object",
+  "properties": {
+    "guest_id": {
+      "type": "string"
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "session_token": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "guest_id",
+    "display_name"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "name": "CodeSnippet",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Snippet title"
+    },
+    "language": {
+      "type": "string",
+      "enum": [
+        "python",
+        "javascript",
+        "cpp",
+        "c",
+        "bash",
+        "html",
+        "css",
+        "rust",
+        "go",
+        "java"
+      ],
+      "default": "python"
+    },
+    "code": {
+      "type": "string",
+      "description": "The code content"
+    },
+    "author_email": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "code"
+  ]
+}

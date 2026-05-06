@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-mono: 'Cutive Mono', monospace;
+    --background: 120 100% 1%;
+    --foreground: 120 100% 55%;
+    --card: 120 100% 3%;
+    --card-foreground: 120 100% 55%;
+    --popover: 120 100% 3%;
+    --popover-foreground: 120 100% 55%;
+    --primary: 120 100% 55%;
+    --primary-foreground: 120 100% 1%;
+    --secondary: 120 50% 8%;
+    --secondary-foreground: 120 100% 55%;
+    --muted: 120 30% 10%;
+    --muted-foreground: 120 40% 35%;
+    --accent: 120 100% 20%;
+    --accent-foreground: 120 100% 55%;
+    --destructive: 0 80% 50%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 120 60% 15%;
+    --input: 120 60% 15%;
+    --ring: 120 100% 55%;
+    --chart-1: 120 100% 55%;
+    --chart-2: 120 80% 40%;
+    --chart-3: 120 60% 30%;
+    --chart-4: 120 40% 20%;
+    --chart-5: 120 20% 15%;
+    --radius: 0.25rem;
+    --sidebar-background: 120 100% 2%;
+    --sidebar-foreground: 120 100% 55%;
+    --sidebar-primary: 120 100% 55%;
+    --sidebar-primary-foreground: 120 100% 1%;
+    --sidebar-accent: 120 50% 8%;
+    --sidebar-accent-foreground: 120 100% 55%;
+    --sidebar-border: 120 60% 15%;
+    --sidebar-ring: 120 100% 55%;
+  }
+
+  .dark {
+    --background: 120 100% 1%;
+    --foreground: 120 100% 55%;
+    --card: 120 100% 3%;
+    --card-foreground: 120 100% 55%;
+    --popover: 120 100% 3%;
+    --popover-foreground: 120 100% 55%;
+    --primary: 120 100% 55%;
+    --primary-foreground: 120 100% 1%;
+    --secondary: 120 50% 8%;
+    --secondary-foreground: 120 100% 55%;
+    --muted: 120 30% 10%;
+    --muted-foreground: 120 40% 35%;
+    --accent: 120 100% 20%;
+    --accent-foreground: 120 100% 55%;
+    --destructive: 0 80% 50%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 120 60% 15%;
+    --input: 120 60% 15%;
+    --ring: 120 100% 55%;
+    --chart-1: 120 100% 55%;
+    --chart-2: 120 80% 40%;
+    --chart-3: 120 60% 30%;
+    --chart-4: 120 40% 20%;
+    --chart-5: 120 20% 15%;
+    --sidebar-background: 120 100% 2%;
+    --sidebar-foreground: 120 100% 55%;
+    --sidebar-primary: 120 100% 55%;
+    --sidebar-primary-foreground: 120 100% 1%;
+    --sidebar-accent: 120 50% 8%;
+    --sidebar-accent-foreground: 120 100% 55%;
+    --sidebar-border: 120 60% 15%;
+    --sidebar-ring: 120 100% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    font-family: 'Cutive Mono', monospace !important;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Terminal glow effect */
+.glow {
+  text-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14, 0 0 20px #39FF1466;
+}
+
+.glow-subtle {
+  text-shadow: 0 0 3px #39FF1488;
+}
+
+.glow-border {
+  box-shadow: 0 0 5px #39FF1433, inset 0 0 5px #39FF1411;
+}
+
+.scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    #39FF1405 2px,
+    #39FF1405 4px
+  );
+  pointer-events: none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(120 100% 1%);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #39FF1444;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #39FF1466;
+}
+
+/* Blinking cursor animation */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: blink 1s infinite;
+}
+
+/* CRT flicker */
+@keyframes flicker {
+  0% { opacity: 0.97; }
+  5% { opacity: 0.95; }
+  10% { opacity: 0.98; }
+  15% { opacity: 0.96; }
+  20% { opacity: 0.99; }
+  100% { opacity: 0.98; }
+}
+
+.crt-flicker {
+  animation: flicker 4s infinite;
+}

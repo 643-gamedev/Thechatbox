@@ -1,0 +1,54 @@
+{
+  "name": "PhoneCall",
+  "type": "object",
+  "properties": {
+    "caller_email": {
+      "type": "string"
+    },
+    "caller_name": {
+      "type": "string"
+    },
+    "caller_number": {
+      "type": "string"
+    },
+    "callee_email": {
+      "type": "string"
+    },
+    "callee_name": {
+      "type": "string"
+    },
+    "callee_number": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "ringing",
+        "active",
+        "ended",
+        "declined"
+      ],
+      "default": "ringing"
+    },
+    "offer_sdp": {
+      "type": "string",
+      "description": "WebRTC offer SDP from caller"
+    },
+    "answer_sdp": {
+      "type": "string",
+      "description": "WebRTC answer SDP from callee"
+    },
+    "caller_ice": {
+      "type": "string",
+      "description": "JSON array of ICE candidates from caller"
+    },
+    "callee_ice": {
+      "type": "string",
+      "description": "JSON array of ICE candidates from callee"
+    }
+  },
+  "required": [
+    "caller_email",
+    "callee_email"
+  ]
+}

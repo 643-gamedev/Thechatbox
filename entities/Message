@@ -1,0 +1,53 @@
+{
+  "name": "Message",
+  "type": "object",
+  "properties": {
+    "channel_id": {
+      "type": "string",
+      "description": "ID of the channel this message belongs to"
+    },
+    "content": {
+      "type": "string",
+      "description": "Message content"
+    },
+    "author_name": {
+      "type": "string",
+      "description": "Display name of the author"
+    },
+    "author_email": {
+      "type": "string",
+      "description": "Email of the author"
+    },
+    "message_type": {
+      "type": "string",
+      "enum": [
+        "text",
+        "code",
+        "system",
+        "file",
+        "image"
+      ],
+      "default": "text"
+    },
+    "code_language": {
+      "type": "string",
+      "description": "Language if message_type is code"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "URL of attached file, image or video"
+    },
+    "file_name": {
+      "type": "string",
+      "description": "Original file name"
+    },
+    "file_type": {
+      "type": "string",
+      "description": "MIME type of the file"
+    }
+  },
+  "required": [
+    "channel_id",
+    "content"
+  ]
+}
