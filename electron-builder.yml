@@ -16,10 +16,12 @@ linux:
   target:
     - deb
   category: Network
+  artifactName: thechatbox.${ext}
 
 win:
   target:
     - nsis
+  artifactName: Thechatbox-Setup.${ext}
 
 mac:
   target:

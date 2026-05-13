@@ -307,6 +307,23 @@ export const db = {
       return data;
     },
 
+    async signInWithOAuth({ provider, redirectTo, scopes } = {}) {
+      const client = requireSupabase();
+      if (!provider) {
+        throw new Error('provider is required for OAuth sign-in');
+      }
+
+      const { data, error } = await client.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo,
+          scopes,
+        },
+      });
+      if (error) throw error;
+      return data;
+    },
+
     async updateMe(updates = {}) {
       const client = requireSupabase();
       const me = await getCurrentUserWithProfile();

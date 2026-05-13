@@ -12,6 +12,10 @@ export default function LoginScreen({ onGuest }) {
   const [fullName, setFullName] = useState('');
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
+  const [oauthLoading, setOauthLoading] = useState('');
+
+  const oauthRedirectTo = `${window.location.origin}/app`;
+  const stoatProvider = import.meta.env.VITE_STOAT_OAUTH_PROVIDER || 'custom:stoat';
 
   const handleAuth = async () => {
     if (!isSupabaseConfigured) {
@@ -50,6 +54,29 @@ export default function LoginScreen({ onGuest }) {
   const handleGuest = () => {
     const session = createGuestSession();
     onGuest(session);
+  };
+
+  const handleOauth = async (provider) => {
+    if (!isSupabaseConfigured) {
+      setStatus('Supabase env vars are missing. Check .env.');
+      return;
+    }
+
+    setStatus('');
+    setOauthLoading(provider);
+    try {
+      await db.auth.signInWithOAuth({
+        provider,
+        redirectTo: oauthRedirectTo,
+      });
+    } catch (error) {
+      const hint =
+        provider.startsWith('custom:')
+          ? ' Configure this custom provider in Supabase Auth > Providers.'
+          : '';
+      setStatus((error.message || 'OAuth sign-in failed.') + hint);
+      setOauthLoading('');
+    }
   };
 
   return (
@@ -166,6 +193,36 @@ export default function LoginScreen({ onGuest }) {
             <div className="flex-1" style={{ borderTop: '1px solid #39FF1433' }} />
             <span className="text-[10px]" style={{ color: '#39FF1466' }}>OR</span>
             <div className="flex-1" style={{ borderTop: '1px solid #39FF1433' }} />
+          </div>
+
+          {/* OAuth options */}
+          <div className="space-y-2">
+            <button
+              onClick={() => handleOauth('discord')}
+              disabled={Boolean(oauthLoading)}
+              className="w-full py-2 text-xs tracking-widest transition-all border"
+              style={{
+                background: 'transparent',
+                color: '#39FF14',
+                borderColor: '#39FF1444',
+                opacity: oauthLoading ? 0.7 : 1,
+              }}
+            >
+              {oauthLoading === 'discord' ? 'CONNECTING DISCORD...' : 'SIGN IN WITH DISCORD'}
+            </button>
+            <button
+              onClick={() => handleOauth(stoatProvider)}
+              disabled={Boolean(oauthLoading)}
+              className="w-full py-2 text-xs tracking-widest transition-all border"
+              style={{
+                background: 'transparent',
+                color: '#39FF14',
+                borderColor: '#39FF1444',
+                opacity: oauthLoading ? 0.7 : 1,
+              }}
+            >
+              {oauthLoading === stoatProvider ? 'CONNECTING STOAT...' : 'SIGN IN WITH STOAT'}
+            </button>
           </div>
 
           {/* Guest button */}

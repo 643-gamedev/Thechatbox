@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:host": "vite --host 0.0.0.0 --port 5173",
     "build": "vite build",
     "lint": "eslint . --quiet",
     "lint:fix": "eslint . --fix",
@@ -16,8 +17,10 @@
     "android:init": "npx cap add android",
     "android:sync": "npm run build && npx cap sync android",
     "android:apk": "npm run build && npx cap sync android && cd android && ./gradlew assembleDebug",
+    "android:asset": "mkdir -p releases && cp android/app/build/outputs/apk/debug/app-debug.apk releases/thechatbox.apk",
     "bridge:dev": "npm --prefix services/stoat-bridge run dev",
     "bridge:start": "npm --prefix services/stoat-bridge run start",
+    "bridge:host": "HTTP_HOST=0.0.0.0 LOCAL_WS_HOST=0.0.0.0 npm --prefix services/stoat-bridge run start",
     "sync:base44": "node tools/base44-sync.mjs"
   },
   "dependencies": {

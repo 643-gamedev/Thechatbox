@@ -33,6 +33,12 @@ VITE_LLM_PROXY_URL=
 # Optional: Stoat bridge / discover API
 VITE_STOAT_BRIDGE_URL=
 VITE_STOAT_BRIDGE_SHARED_SECRET=
+
+# Download page release source
+VITE_RELEASE_REPO=643-gamedev/Thechatbox
+
+# Optional Supabase custom provider id for Stoat OAuth/OIDC
+VITE_STOAT_OAUTH_PROVIDER=custom:stoat
 ```
 
 3. Create Supabase schema:
@@ -47,6 +53,12 @@ VITE_STOAT_BRIDGE_SHARED_SECRET=
 npm run dev
 ```
 
+For LAN/localhost testing with explicit host binding:
+
+```bash
+npm run dev:host
+```
+
 ## Cloudflare Pages Deploy (Free)
 
 1. Push this repository to GitHub.
@@ -59,6 +71,11 @@ npm run dev
 - `VITE_SUPABASE_ANON_KEY`
 - `VITE_SUPABASE_STORAGE_BUCKET`
 - `VITE_STOAT_BRIDGE_URL` (optional)
+
+To keep it $0:
+- Serve static assets only from Pages.
+- Avoid Pages Functions unless needed (Functions use Workers quota).
+- Keep media/build files under Pages limits, move large files to GitHub Releases.
 
 ## GitHub Repo Setup (`643-gamedev`)
 
@@ -104,15 +121,16 @@ npm run desktop:build
 ```
 
 Artifacts will be generated in `releases/`:
-- Windows: `.exe`
+- Windows: `Thechatbox-Setup.exe`
 - macOS: `.dmg`
-- Linux: `.deb`
+- Linux: `thechatbox.deb`
 
 ## Android APK Build
 
 ```bash
 npm run android:init     # first time only
 npm run android:apk
+npm run android:asset    # copies apk to releases/thechatbox.apk
 ```
 
 APK output path:
@@ -137,6 +155,12 @@ cp services/stoat-bridge/env.sample services/stoat-bridge/.env
 npm run bridge:dev
 ```
 
+For localhost/LAN testing:
+
+```bash
+npm run bridge:host
+```
+
 You must configure Discord and Stoat bot tokens and update:
 - `services/stoat-bridge/channel-map.json`
 - `services/stoat-bridge/discover-servers.json`
@@ -145,12 +169,30 @@ You must configure Discord and Stoat bot tokens and update:
 
 `/` is the download landing page and links to GitHub release artifacts:
 
-- `Thechatbox-Setup.exe`
-- `Thechatbox.dmg`
-- `thechatbox.deb`
-- `thechatbox.apk`
+- Windows: `.exe`
+- Linux: `.deb`
+- Android: `.apk`
 
-These filenames are expected in each GitHub release.
+It auto-reads the latest GitHub release and enables download buttons only for uploaded assets.
+
+Release asset checklist (for working download buttons):
+
+1. `npm run desktop:build`
+2. `npm run android:apk`
+3. `npm run android:asset`
+4. Upload these files to a GitHub Release:
+   - `releases/Thechatbox-Setup.exe`
+   - `releases/thechatbox.deb`
+   - `releases/thechatbox.apk`
+
+## OAuth Login
+
+- Discord sign-in is supported through Supabase Social Auth (`provider: discord`).
+- Stoat sign-in button uses Supabase Custom OAuth/OIDC provider id (default: `custom:stoat`).
+- In Supabase Dashboard:
+  - Enable Discord provider and add Discord client ID/secret.
+  - Optionally create a custom provider for Stoat and use that identifier in `VITE_STOAT_OAUTH_PROVIDER`.
+  - For Stoat, this only works if your Stoat instance exposes OAuth2/OIDC endpoints.
 
 ## License
 
