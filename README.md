@@ -20,7 +20,7 @@ npm install
 npm --prefix services/stoat-bridge install
 ```
 
-2. Create `.env` in project root:
+2. Create `.env` in project root (you can copy from [`env.sample`](env.sample)):
 
 ```bash
 VITE_SUPABASE_URL=https://YOUR_PROJECT.supabase.co
@@ -133,7 +133,7 @@ What it does:
 Setup:
 
 ```bash
-cp services/stoat-bridge/.env.example services/stoat-bridge/.env
+cp services/stoat-bridge/env.sample services/stoat-bridge/.env
 npm run bridge:dev
 ```
 
