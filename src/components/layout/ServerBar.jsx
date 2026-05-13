@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Plus, Compass, Settings, LogOut } from 'lucide-react';
+import { Plus, Compass, Settings } from 'lucide-react';
 import { useUser } from '@/lib/UserContext';
 
 export default function ServerBar({ servers, onCreateServer, onDiscover, onSettings }) {

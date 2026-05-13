@@ -1,0 +1,18 @@
+{
+  "discord": [
+    {
+      "name": "Dev Terminal Hub",
+      "description": "Programming help, projects, and open-source collaboration.",
+      "invite_url": "https://discord.gg/example-dev-terminal",
+      "nsfw": false
+    }
+  ],
+  "stoat": [
+    {
+      "name": "Stoat Builders",
+      "description": "Chatbox + Stoat integration and bot development.",
+      "invite_url": "https://stoat.chat/invite/example-stoat-builders",
+      "nsfw": false
+    }
+  ]
+}

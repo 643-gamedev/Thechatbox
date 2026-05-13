@@ -1,5 +1,4 @@
 import React from 'react';
-import { Gamepad2 } from 'lucide-react';
 
 export default function XboxCloud() {
   return (

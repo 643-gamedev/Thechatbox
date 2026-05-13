@@ -55,7 +55,7 @@ export default function Landing() {
 The desktop app hasn't been released yet!
 
 In the meantime, you can use the web app at:
-https://thechatbox.db.app
+https://thechatbox.pages.dev
 
 Stay tuned for the official desktop release for Windows, macOS, and Linux.
 
@@ -137,7 +137,7 @@ Stay tuned for the official desktop release for Windows, macOS, and Linux.
             <div className="w-2.5 h-2.5 rounded-full bg-destructive opacity-60" />
             <div className="w-2.5 h-2.5 rounded-full opacity-40" style={{ background: '#fbbf24' }} />
             <div className="w-2.5 h-2.5 rounded-full opacity-60" style={{ background: '#39FF14' }} />
-            <span className="text-[10px] text-muted-foreground ml-2">thechatbox.db.app</span>
+            <span className="text-[10px] text-muted-foreground ml-2">thechatbox.pages.dev</span>
           </div>
           <div className="bg-card p-6 min-h-48 flex items-center justify-center">
             <div className="text-center space-y-3 w-full max-w-md">

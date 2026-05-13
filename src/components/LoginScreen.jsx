@@ -2,16 +2,49 @@
 import React, { useState } from 'react';
 
 import { createGuestSession } from '@/lib/guestSession';
+import { db } from '@/api/base44Client';
+import { isSupabaseConfigured } from '@/lib/supabaseClient';
 
 export default function LoginScreen({ onGuest }) {
   const [mode, setMode] = useState('login'); // 'login' | 'signup'
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleAuth = () => {
-    const url = new URL(window.location.href);
-    if (mode === 'signup') url.searchParams.set('signup', '1');
-    db.auth.redirectToLogin(url.toString());
+  const handleAuth = async () => {
+    if (!isSupabaseConfigured) {
+      setStatus('Supabase env vars are missing. Check .env.');
+      return;
+    }
+    if (!email.trim() || !password.trim()) {
+      setStatus('Email and password are required.');
+      return;
+    }
+
+    setLoading(true);
+    setStatus('');
+    try {
+      if (mode === 'signup') {
+        await db.auth.signUpWithPassword({
+          email: email.trim(),
+          password,
+          fullName: fullName.trim() || email.trim(),
+        });
+        setStatus('Account created. You can now log in.');
+      } else {
+        await db.auth.signInWithPassword({
+          email: email.trim(),
+          password,
+        });
+        window.location.href = '/app';
+      }
+    } catch (error) {
+      setStatus(error.message || 'Authentication failed.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleGuest = () => {
@@ -83,21 +116,48 @@ export default function LoginScreen({ onGuest }) {
           <div className="space-y-3">
             <p className="text-[11px] text-center" style={{ color: '#39FF1488' }}>
               {mode === 'login'
-                ? '> Redirects to secure login portal'
-                : '> Create your account to get started'}
+                ? '> Sign in with email + password'
+                : '> Create account with email + password'}
             </p>
+            {mode === 'signup' && (
+              <input
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                placeholder="display name"
+                className="w-full bg-black border px-3 py-2 text-xs outline-none"
+                style={{ borderColor: '#39FF1444', color: '#39FF14' }}
+              />
+            )}
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="email"
+              className="w-full bg-black border px-3 py-2 text-xs outline-none"
+              style={{ borderColor: '#39FF1444', color: '#39FF14' }}
+            />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="password"
+              className="w-full bg-black border px-3 py-2 text-xs outline-none"
+              style={{ borderColor: '#39FF1444', color: '#39FF14' }}
+            />
             <button
               onClick={handleAuth}
+              disabled={loading}
               className="w-full py-3 text-sm font-bold tracking-widest transition-all"
               style={{
                 background: '#39FF14',
                 color: '#000',
                 border: 'none',
+                opacity: loading ? 0.6 : 1,
               }}
               onMouseOver={e => (e.currentTarget.style.background = '#2acc0f')}
               onMouseOut={e => (e.currentTarget.style.background = '#39FF14')}
             >
-              {mode === 'login' ? '$ ./login.sh' : '$ ./register.sh'}
+              {loading ? '$ ./auth.sh --wait' : mode === 'login' ? '$ ./login.sh' : '$ ./register.sh'}
             </button>
           </div>
 
@@ -127,9 +187,7 @@ export default function LoginScreen({ onGuest }) {
           </button>
 
           {/* Status */}
-          {status && (
-            <p className="text-[10px] text-center" style={{ color: '#39FF14' }}>{status}</p>
-          )}
+          {status && <p className="text-[10px] text-center" style={{ color: '#39FF14' }}>{status}</p>}
         </div>
 
         {/* Footer note */}

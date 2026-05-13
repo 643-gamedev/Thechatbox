@@ -1,0 +1,9 @@
+{
+  "channels": [
+    {
+      "localChannelId": "main-general",
+      "discordChannelId": "123456789012345678",
+      "stoatChannelId": "01ABCDEF0123456789ABCDEF01"
+    }
+  ]
+}

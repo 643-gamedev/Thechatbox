@@ -6,7 +6,7 @@ Self-hostable developer chat platform with web, desktop, and Android builds.
 
 - Frontend: React + Vite + Tailwind
 - Database/Auth/Storage/Realtime: Supabase (free tier compatible)
-- Hosting: Netlify (free tier compatible)
+- Hosting: Cloudflare Pages (free tier compatible)
 - Desktop apps: Electron + electron-builder (`.exe`, `.dmg`, `.deb`)
 - Android app: Capacitor (`.apk`)
 - Stoat federation bridge: `services/stoat-bridge` (open-source Node service)
@@ -30,7 +30,7 @@ VITE_SUPABASE_STORAGE_BUCKET=uploads
 # Optional: endpoint for the code-run simulator button in Code Editor
 VITE_LLM_PROXY_URL=
 
-# Optional: Stoat bridge sync
+# Optional: Stoat bridge / discover API
 VITE_STOAT_BRIDGE_URL=
 VITE_STOAT_BRIDGE_SHARED_SECRET=
 ```
@@ -47,19 +47,18 @@ VITE_STOAT_BRIDGE_SHARED_SECRET=
 npm run dev
 ```
 
-## Netlify Deploy (Free)
+## Cloudflare Pages Deploy (Free)
 
 1. Push this repository to GitHub.
-2. In Netlify, create a new site from the GitHub repo.
+2. In Cloudflare Dashboard, go to `Workers & Pages` -> `Create` -> `Pages` -> `Connect to Git`.
 3. Build settings:
 - Build command: `npm run build`
 - Publish directory: `dist`
-4. Add env vars in Netlify:
+4. Add env vars in Cloudflare Pages:
 - `VITE_SUPABASE_URL`
 - `VITE_SUPABASE_ANON_KEY`
 - `VITE_SUPABASE_STORAGE_BUCKET`
-
-`netlify.toml` is already included.
+- `VITE_STOAT_BRIDGE_URL` (optional)
 
 ## GitHub Repo Setup (`643-gamedev`)
 
@@ -125,9 +124,11 @@ Bridge service location:
 - [`services/stoat-bridge`](services/stoat-bridge)
 
 What it does:
-- Mirrors Thechatbox messages into Stoat via bot identities.
-- Accepts Stoat webhook messages and writes them back into Thechatbox.
-- Supports manual per-server sync endpoint.
+- Runs a **local WebSocket server** on `ws://127.0.0.1:8080` for custom UI clients.
+- Uses `channel-map.json` to map `local-channel-id` to Discord and Stoat channel IDs.
+- Relays local outbound messages to Discord webhooks (spoofed username/avatar) and Stoat bot API.
+- Listens to Discord and Stoat gateway events and broadcasts standardized inbound packets to local clients.
+- Exposes `/discover/servers?source=discord|stoat` and filters out NSFW listings.
 
 Setup:
 
@@ -136,7 +137,9 @@ cp services/stoat-bridge/.env.example services/stoat-bridge/.env
 npm run bridge:dev
 ```
 
-You must configure your Stoat API base URL/token and webhook routing.
+You must configure Discord and Stoat bot tokens and update:
+- `services/stoat-bridge/channel-map.json`
+- `services/stoat-bridge/discover-servers.json`
 
 ## Downloads Page
 

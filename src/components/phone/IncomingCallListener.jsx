@@ -2,7 +2,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 import { useUser } from '@/lib/UserContext';
-import { getOrCreatePhoneNumber } from '@/lib/phoneNumber';
 import { createPeerConnection, getUserMedia, addStreamToPeer, attachRemoteStream } from '@/lib/webrtc';
 import { playJP3Ringtone } from '@/lib/sounds';
 import IncomingCallOverlay from './IncomingCallOverlay';
@@ -134,7 +133,7 @@ export default function IncomingCallListener({ children }) {
   return (
     <>
       {children}
-      <audio ref={remoteAudioRef} autoPlay playsInline className="hidden" />
+      <audio ref={remoteAudioRef} autoPlay className="hidden" />
       <IncomingCallOverlay call={incomingCall} onAccept={accept} onDecline={decline} />
       {/* Active call overlay (floating, if not on phone page) */}
       {activeCall && (

@@ -12,13 +12,17 @@ export function UserProvider({ children }) {
 
   useEffect(() => {
     async function init() {
-      const isAuth = await db.auth.isAuthenticated();
-      if (isAuth) {
-        const user = await db.auth.me();
-        setCurrentUser(user);
-        setIsGuest(false);
-        setLoading(false);
-        return;
+      try {
+        const isAuth = await db.auth.isAuthenticated();
+        if (isAuth) {
+          const user = await db.auth.me();
+          setCurrentUser(user);
+          setIsGuest(false);
+          setLoading(false);
+          return;
+        }
+      } catch {
+        // fall through to guest/local session handling
       }
       const guest = getGuestSession();
       if (guest) {
@@ -35,8 +39,12 @@ export function UserProvider({ children }) {
 
   const refreshUser = async () => {
     if (isGuest) return;
-    const user = await db.auth.me();
-    setCurrentUser(user);
+    try {
+      const user = await db.auth.me();
+      setCurrentUser(user);
+    } catch {
+      setCurrentUser(null);
+    }
   };
 
   const loginAsGuest = (session) => {

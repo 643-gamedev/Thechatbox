@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Upload, Gamepad2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 export default function GBAEmulator() {
   const [romUrl, setRomUrl] = useState(null);
